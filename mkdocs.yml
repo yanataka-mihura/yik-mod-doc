@@ -1,0 +1,63 @@
+site_name: mihura(YIK) Mods
+site_description: 自作Modの説明・導入手順・設定リファレンス
+site_url: https://yanataka-mihura.github.io/yik-mod-doc/
+
+theme:
+  name: material
+  language: ja
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/weather-night
+        name: ダークモードに切り替え
+    - scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/weather-sunny
+        name: ライトモードに切り替え
+
+extra_css:
+  - stylesheets/extra.css
+  
+nav:
+  - Docs:
+      - About: index.md
+      - Mod一覧: mods/index.md
+      - YikPartyTalk:
+          - 概要: mods/party-talk/index.md
+          - BepInExの設定ファイル: mods/party-talk/config.md
+          - うちのこキャラ追加方法: mods/party-talk/howtoadd.md
+          - おしゃべり会話定義の設定項目一覧: mods/party-talk/definition.md
+          - 特殊なテキスト変換: mods/party-talk/textconvert.md
+          - 使用できるかもしれないTopicId一覧: mods/party-talk/idlist.md
+          - ExcelからJSONへのおしゃべり定義ファイルの移行案内: mods/party-talk/excel2json.md
+          - JsonEditorについて: mods/party-talk/jsoneditor.md
+          - QA: mods/party-talk/qa.md
+          - 更新履歴: mods/party-talk/changelog.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
