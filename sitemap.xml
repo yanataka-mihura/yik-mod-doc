@@ -2,42 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://yanataka-mihura.github.io/yik-mod-doc/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
          <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
          <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
          <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/changelog/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
          <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/config/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
-         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/examples/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/definition/</loc>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
-         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/install/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/excel2json/</loc>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
-         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/jsonc-format/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/howtoadd/</loc>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
-         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/troubleshooting/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/idlist/</loc>
+         <lastmod>2026-07-06</lastmod>
     </url>
     <url>
-         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/usage/</loc>
-         <lastmod>2026-07-05</lastmod>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/jsoneditor/</loc>
+         <lastmod>2026-07-06</lastmod>
+    </url>
+    <url>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/qa/</loc>
+         <lastmod>2026-07-06</lastmod>
+    </url>
+    <url>
+         <loc>https://yanataka-mihura.github.io/yik-mod-doc/mods/party-talk/textconvert/</loc>
+         <lastmod>2026-07-06</lastmod>
     </url>
 </urlset>

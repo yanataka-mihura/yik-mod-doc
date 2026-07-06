@@ -1,0 +1,26 @@
+.screenshot-strip {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.8rem;
+  margin: 1rem 0 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--md-code-bg-color);
+  scroll-snap-type: x proximity;
+}
+
+.screenshot-strip img {
+  flex: 0 0 auto;
+  width: 340px;
+  max-width: 80vw;
+  height: auto;
+  border-radius: 0.35rem;
+  scroll-snap-align: start;
+}
+
+.center-button {
+  display: block;
+  width: fit-content;
+  margin: 1.5rem auto;
+}
