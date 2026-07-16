@@ -1,0 +1,242 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/party-talk.schema.json",
+  "title": "PartyTalk Definition",
+  "description": "キャラクターまたはグローバル枠ごとの単独発言・連続発言を定義するJSON用スキーマ。",
+  "type": "object",
+  "required": ["Talks"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "エディタ補完・検証用のJSON Schema参照。Mod読み込み時は無視してよい。"
+    },
+    "Talks": {
+      "type": "array",
+      "minItems": 1,
+      "description": "キャラクター、ID、またはグローバル枠ごとの会話定義一覧。",
+      "items": {
+        "$ref": "#/definitions/TalkTarget"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TalkTarget": {
+      "type": "object",
+      "description": "1つのキャラクター名・キャラクターID・グローバル枠に紐づく会話定義。",
+      "required": ["TargetId", "TargetType", "Topics"],
+      "properties": {
+        "TargetId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "話者区別用の名前・キャラクターID・または予約値。TargetTypeがGlobalの場合は pc を推奨、Mod内でpc強制設定。"
+        },
+        "TargetType": {
+          "type": "string",
+          "enum": ["SimpleName", "Id", "Any", "Global"],
+          "description": "TargetIdの解釈方法。SimpleName: 名前、Id: キャラクターID、Any: Excel移行・フォールバック用、Global: グローバル共通会話枠。"
+        },
+        "Topics": {
+          "type": "array",
+          "minItems": 1,
+          "description": "この対象に紐づく会話トピック一覧。",
+          "items": {
+            "$ref": "#/definitions/Topic"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "Topic": {
+      "type": "object",
+      "description": "1つの会話トピック定義。単独発言 Lines と連続発言 TalkSequences を持てる。",
+      "required": ["TopicId", "Chance"],
+      "properties": {
+        "TopicId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "会話ID。例: DrinkMilk, PlayerVeryHungry, ReturnHome など。"
+        },
+        "Chance": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "このトピック内の候補が発言候補に入るチャンス値。単独発言・連続発言の両方に適用される。0-10。"
+        },
+        "Cooldown": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 1,
+          "description": "このトピックが次に発言可能になるまでのターン数。一部の会話IDでのみ利用される。"
+        },
+        "Lines": {
+          "type": "array",
+          "minItems": 1,
+          "description": "既存の単独発言候補一覧。この中からWeightにより1つ選ばれ、即時表示される。",
+          "items": {
+            "$ref": "#/definitions/SingleLine"
+          }
+        },
+        "TalkSequences": {
+          "type": "array",
+          "minItems": 1,
+          "description": "連続発言候補一覧。単独発言候補と同列にChance判定され、通過候補からWeight抽選される。",
+          "items": {
+            "$ref": "#/definitions/TalkSequence"
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["Lines"]
+        },
+        {
+          "required": ["TalkSequences"]
+        }
+      ],
+      "additionalProperties": false
+    },
+
+    "SingleLine": {
+      "type": "object",
+      "description": "既存の単独発言候補。選ばれた場合、この1行だけ表示される。",
+      "required": ["Text"],
+      "properties": {
+        "Weight": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "同一Topic内の単独発言候補としての抽選重み。省略時は1。"
+        },
+        "Text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "発言に使われるテキスト。必須。"
+        },
+        "Portrait": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ポートレート差し替えID。非必須。指定がない場合は通常ポートレートを使う。"
+        },
+        "Sound": {
+          "type": "string",
+          "minLength": 1,
+          "description": "音ファイルのID。非必須。指定がない場合、またはExcel由来データではNullとして扱う。"
+        },
+        "NoGakiConvert": {
+          "type": "boolean",
+          "default": false,
+          "description": "GakiConvert変換処理を拒否するフラグ。非必須。省略時、またはExcel由来データではfalseとして扱う。"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "TalkSequence": {
+      "type": "object",
+      "description": "連続発言候補。選ばれた場合、Linesを順番に表示する。",
+      "required": ["Lines"],
+      "properties": {
+        "Weight": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "単独発言候補・他の連続発言候補と同列に抽選される際の重み。省略時は1。"
+        },
+        "AdditionalTargets": {
+          "type": "array",
+          "minItems": 1,
+          "description": "発言者ではないが、会話成立のためPT内に追加で必要なキャラクター一覧。Lines内のSpeakerは自動的に必要人物として扱われるため、ここに重複指定する必要はない。",
+          "items": {
+            "$ref": "#/definitions/TargetRef"
+          }
+        },
+        "Lines": {
+          "type": "array",
+          "minItems": 1,
+          "description": "連続発言として順番に表示される行一覧。",
+          "items": {
+            "$ref": "#/definitions/SequenceLine"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "SequenceLine": {
+      "type": "object",
+      "description": "連続発言の1行。Speaker指定またはPortrait指定のどちらかが必要。",
+      "required": ["Text"],
+      "properties": {
+        "SpeakerId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "この行を発言するキャラクターの名前またはID。SpeakerTypeとセットで指定する。"
+        },
+        "SpeakerType": {
+          "type": "string",
+          "enum": ["SimpleName", "Id"],
+          "description": "SpeakerIdの解釈方法。SimpleName: 名前、Id: キャラクターID。"
+        },
+        "Portrait": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ポートレート差し替えID。Speakerなしの場合は仮想話者表示として必須。Speakerありの場合はポートレート上書きとして扱う。"
+        },
+        "Sound": {
+          "type": "string",
+          "minLength": 1,
+          "description": "音ファイルのID。非必須。指定がない場合、はNullとして扱う。"
+        },
+        "NoGakiConvert": {
+          "type": "boolean",
+          "default": false,
+          "description": "GakiConvert変換処理を拒否するフラグ。非必須。省略時はfalseとして扱う。"
+        },
+        "Text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "発言に使われるテキスト。必須。"
+        },
+        "DelayAfterMs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "この行を表示した後、次の行へ進むまでの待機ミリ秒数（1000で1秒）。省略時はMod側のデフォルト値を使う。"
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["SpeakerId", "SpeakerType"]
+        },
+        {
+          "required": ["Portrait"]
+        }
+      ],
+      "dependencies": {
+        "SpeakerId": ["SpeakerType"],
+        "SpeakerType": ["SpeakerId"]
+      },
+      "additionalProperties": false
+    },
+
+    "TargetRef": {
+      "type": "object",
+      "description": "会話成立条件や参照用の対象指定。",
+      "required": ["TargetId", "TargetType"],
+      "properties": {
+        "TargetId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "対象の名前またはキャラクターID。"
+        },
+        "TargetType": {
+          "type": "string",
+          "enum": ["SimpleName", "Id"],
+          "description": "TargetIdの解釈方法。AdditionalTargetsでは実在キャラクター確認用のためSimpleNameまたはIdを使う。"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
